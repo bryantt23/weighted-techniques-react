@@ -4,6 +4,8 @@ import { getTechniques } from '../services/techniquesApi'
 import { weightedRandomSamplingUntilEmpty } from '../services/techniquesHelper'
 
 const PAGE_SIZE = 16;
+const HIGHLIGHTED_CLASS_NAME = "current";
+
 function Techniques() {
   const [techniques, setTechniques] = useState([])
   const [techniquesWithWeightedRandomization, setTechniquesWithWeightedRandomization] = useState([])
@@ -43,11 +45,21 @@ function Techniques() {
     <div className="container">
       <h1>Smash the automatic thought techniques</h1>
       <ul className="techniques">
-        {techniquesDisplayed.map(({ name, weight, _id }) => <li key={_id}>
-          <div>
-            {name} ({weight})
-          </div>
-        </li>)}
+        {techniquesDisplayed.map(({ name, weight, description, _id }) => {
+          let descriptionBtn, descriptionElement;
+          if (description) {
+            descriptionBtn = <button className="toggle-btn toggle">Show Description</button>
+            descriptionElement = <p className="description">{description}</p>
+          }
+
+          return (<li key={_id} className={HIGHLIGHTED_CLASS_NAME}>
+            <div>
+              {name} ({weight})
+            </div>
+            <button className="like-btn">Like</button>{description && descriptionBtn}
+          </li>)
+        }
+        )}
       </ul>
       <button className="more">Get More Techniques</button>
       <button className="reset">Start over</button>
