@@ -49,9 +49,6 @@ function Techniques() {
       </ul>
       <button className="more">Get More Techniques</button>
       <button className="reset">Start over</button>
-      {/* TODO create Technique component */}
-      {JSON.stringify(techniquesDisplayed.length)}
-      {JSON.stringify(techniquesDisplayed)}
     </div>
   )
 }
