@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 
 const HIGHLIGHTED_CLASS_NAME = "current";
-function Technique({ technique }) {
+const Technique = forwardRef(({ technique }, ref) => {
   const [showDescription, setShowDescription] = useState(false)
   const { name, weight, description, _id, isHighlighted } = technique
 
@@ -14,7 +14,10 @@ function Technique({ technique }) {
     console.log('Like button clicked for:', _id);
   }
 
-  return (<li key={_id} className={isHighlighted && HIGHLIGHTED_CLASS_NAME} onClick={toggleDescription}>
+  return (<li
+    ref={ref}
+    key={_id} className={isHighlighted ? HIGHLIGHTED_CLASS_NAME : ""}
+    onClick={toggleDescription}>
     <div>
       {name} ({weight})
     </div>
@@ -22,7 +25,7 @@ function Technique({ technique }) {
     <button className="like-btn" onClick={handleLikeClick}>Like</button>
     {description && <button className="toggle-btn toggle" >Show Description</button>}
   </li>)
-}
+})
 
 
 export default Technique
