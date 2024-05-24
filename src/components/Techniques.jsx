@@ -4,7 +4,7 @@ import { getTechniques } from '../services/techniquesApi'
 import { weightedRandomSamplingUntilEmpty } from '../services/techniquesHelper'
 import Technique from './Technique'
 
-const PAGE_SIZE = 16;
+const PAGE_SIZE = 3;
 
 function Techniques() {
   const [techniques, setTechniques] = useState([])
@@ -27,7 +27,8 @@ function Techniques() {
   useEffect(() => {
     if (techniques.length > 0) {
       console.log("🚀 ~ Techniques ~ techniques:", techniques)
-      const shuffledTechniques = weightedRandomSamplingUntilEmpty(techniques)
+      const shuffledTechniques = weightedRandomSamplingUntilEmpty(techniques).map(technique => ({ ...technique, isHighlighted: false }))
+      console.log("🚀 ~ useEffect ~ shuffledTechniques:", shuffledTechniques)
       setTechniquesWithWeightedRandomization(shuffledTechniques)
       getMoreTechniques()
     }
@@ -37,7 +38,9 @@ function Techniques() {
     const endPos = Math.min(curPos + PAGE_SIZE, techniquesWithWeightedRandomization.length);
     console.log("🚀 ~ getMoreTechniques ~ techniquesWithWeightedRandomization:", techniquesWithWeightedRandomization)
 
-    setTechniquesDisplayed(prev => [...prev, ...techniquesWithWeightedRandomization.slice(curPos, endPos)])
+    const currentTechniquesRemovedHighlighting = techniquesDisplayed.map(technique => ({ ...technique, isHighlighted: false }))
+    const nextTechniques = techniquesWithWeightedRandomization.slice(curPos, endPos).map(technique => ({ ...technique, isHighlighted: true }))
+    setTechniquesDisplayed([...currentTechniquesRemovedHighlighting, ...nextTechniques])
     setCurPos(endPos);
   }
 
@@ -47,7 +50,7 @@ function Techniques() {
       <ul className="techniques">
         {techniquesDisplayed.map(technique => <Technique key={technique._id} technique={technique} />)}
       </ul>
-      <button className="more">Get More Techniques</button>
+      <button className="more" onClick={getMoreTechniques}>Get More Techniques</button>
       <button className="reset">Start over</button>
     </div>
   )

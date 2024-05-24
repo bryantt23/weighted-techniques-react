@@ -3,7 +3,7 @@ import { useState } from 'react'
 const HIGHLIGHTED_CLASS_NAME = "current";
 function Technique({ technique }) {
   const [showDescription, setShowDescription] = useState(false)
-  const { name, weight, description, _id } = technique
+  const { name, weight, description, _id, isHighlighted } = technique
 
   const toggleDescription = () => {
     setShowDescription(prev => !prev)
@@ -14,7 +14,7 @@ function Technique({ technique }) {
     console.log('Like button clicked for:', _id);
   }
 
-  return (<li key={_id} className={HIGHLIGHTED_CLASS_NAME} onClick={toggleDescription}>
+  return (<li key={_id} className={isHighlighted && HIGHLIGHTED_CLASS_NAME} onClick={toggleDescription}>
     <div>
       {name} ({weight})
     </div>
