@@ -20,7 +20,7 @@ function Techniques() {
         const techniquesFromApi = await getTechniques()
         setTechniques(techniquesFromApi)
       } catch (error) {
-        console.log("🚀 ~ fetchData ~ error:", error)
+        console.error(error)
       }
     }
     fetchData()
@@ -28,15 +28,13 @@ function Techniques() {
 
   useEffect(() => {
     if (techniques.length > 0) {
-      const shuffledTechniques = weightedRandomSamplingUntilEmpty(techniques).map(technique => ({ ...technique, isHighlighted: false }))
-      console.log("🚀 ~ useEffect ~ shuffledTechniques:", shuffledTechniques)
+      const shuffledTechniques = weightedRandomSamplingUntilEmpty([...techniques]).map(technique => ({ ...technique, isHighlighted: false }))
       setTechniquesWithWeightedRandomization(shuffledTechniques)
     }
   }, [techniques])
 
   useEffect(() => {
     if (techniquesWithWeightedRandomization.length > 0 && techniquesDisplayed.length === 0) {
-      console.log('hii')
       getMoreTechniques()
     }
   }, [techniquesWithWeightedRandomization])
@@ -48,20 +46,19 @@ function Techniques() {
   }, [techniquesDisplayed])
 
   const getMoreTechniques = () => {
-    console.log("🚀 ~ getMoreTechniques ~ techniquesWithWeightedRandomization:", techniquesWithWeightedRandomization)
 
     const endPos = Math.min(curPos + PAGE_SIZE, techniquesWithWeightedRandomization.length);
-
-    console.log("🚀 ~ getMoreTechniques ~ endPos:", endPos)
     const currentTechniquesRemovedHighlighting = techniquesDisplayed.map(technique => ({ ...technique, isHighlighted: false }))
     const nextTechniques = techniquesWithWeightedRandomization.slice(curPos, endPos).map(technique => ({ ...technique, isHighlighted: true }))
-    console.log("🚀 ~ getMoreTechniques ~ nextTechniques:", nextTechniques)
     setFirstItemElementId(nextTechniques[0]._id)
     setTechniquesDisplayed([...currentTechniquesRemovedHighlighting, ...nextTechniques])
     setCurPos(endPos);
-    // ref.current.scrollIntoView({
-    //   behavior: "smooth"
-    // })
+  }
+
+  const reshuffleTechniques = () => {
+    setCurPos(0)
+    setTechniquesDisplayed([])
+    setTechniques([...techniques])
   }
 
   return (
@@ -76,7 +73,7 @@ function Techniques() {
           />)}
       </ul>
       <button className="more" onClick={getMoreTechniques}>Get More Techniques</button>
-      <button className="reset">Start over</button>
+      <button className="reset" onClick={reshuffleTechniques}>Start over</button>
     </div>
   )
 }
