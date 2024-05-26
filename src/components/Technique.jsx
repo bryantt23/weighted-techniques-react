@@ -5,7 +5,9 @@ const HIGHLIGHTED_CLASS_NAME = "current";
 
 const Technique = forwardRef(({ technique }, ref) => {
   const [showDescription, setShowDescription] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
+  const [justLiked, setJustLiked] = useState(false)
+  const [alreadyLiked, setAlreadyLiked] = useState(false)
+  const [buttonClassNames, setButtonClassNames] = useState("")
   const { name, weight, description, _id, isHighlighted } = technique
 
   const toggleDescription = () => {
@@ -17,9 +19,10 @@ const Technique = forwardRef(({ technique }, ref) => {
     console.log('Like button clicked for:', _id);
     try {
       await handleLike(_id)
-      setIsLiked(true)
+      setJustLiked(true)
       setTimeout(() => {
-        setIsLiked(false)
+        setJustLiked(false)
+        setAlreadyLiked(true)
       }, 2000)
     } catch (error) {
       console.error(error)
@@ -35,10 +38,10 @@ const Technique = forwardRef(({ technique }, ref) => {
     </div>
     {(description && showDescription) && <p className="description">{description}</p>}
     <button
-      className={`like-btn ${isLiked && "liked"}`}
-      disabled={isLiked}
+      className={`${alreadyLiked && "already-clicked"}`}
+      disabled={justLiked}
       onClick={handleLikeClick}>
-      {isLiked ? "Like 👍" : "Like"}
+      {justLiked ? "Like 👍" : "Like"}
     </button>
     {description && <button className="toggle-btn toggle" >Show Description</button>}
   </li>)

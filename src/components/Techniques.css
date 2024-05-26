@@ -69,8 +69,11 @@ button.like-btn {
   transition: background-color 0.3s, opacity 0.3s; /* Smooth transition for background and opacity changes */
 }
 
-button.liked,
 button:disabled {
   background-color: #27ae60; /* Green to indicate liked */
   cursor: default;
+}
+
+button.already-clicked {
+  background-color: #3e6a40; /* Dull green color */
 }

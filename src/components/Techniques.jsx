@@ -4,7 +4,7 @@ import { getTechniques } from '../services/techniquesApi'
 import { weightedRandomSamplingUntilEmpty } from '../services/techniquesHelper'
 import Technique from './Technique'
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 160;
 
 function Techniques() {
   const [techniques, setTechniques] = useState([])

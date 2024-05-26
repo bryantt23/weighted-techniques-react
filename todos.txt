@@ -2,10 +2,12 @@ convert to React
 make already clicked dull green
 show all
     disable show all and more techniques    
+when all techniques shown, disable more techniques 
 filter
 sort ascending descending
 hide description makes collapse go to the top of that technique component
-when all techniques shown, disable more techniques 
 
-
+redux toolkit
+low priority update the like count
+add pages to see all techniqiues 
 
