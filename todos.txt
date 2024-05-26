@@ -1,5 +1,7 @@
-convert to React
-make already clicked dull green
+convert to React x
+make already clicked dull green x
+make it into a pwa
+
 show all
     disable show all and more techniques    
 when all techniques shown, disable more techniques 
