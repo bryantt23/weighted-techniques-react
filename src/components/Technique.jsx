@@ -1,6 +1,7 @@
 import { useState, forwardRef } from 'react'
 
 const HIGHLIGHTED_CLASS_NAME = "current";
+
 const Technique = forwardRef(({ technique }, ref) => {
   const [showDescription, setShowDescription] = useState(false)
   const { name, weight, description, _id, isHighlighted } = technique
@@ -27,5 +28,6 @@ const Technique = forwardRef(({ technique }, ref) => {
   </li>)
 })
 
+Technique.displayName = "Technique"
 
 export default Technique
