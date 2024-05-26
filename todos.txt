@@ -1,0 +1,11 @@
+convert to React
+make already clicked dull green
+show all
+    disable show all and more techniques    
+filter
+sort ascending descending
+hide description makes collapse go to the top of that technique component
+when all techniques shown, disable more techniques 
+
+
+
