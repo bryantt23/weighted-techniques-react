@@ -1,6 +1,35 @@
 import axios from "axios";
 
-export async function getTechniques() {
+export async function loadCurrentTechniques() {
+    try {
+        const techniquesFromApi = await getTechniques(); // Attempt to load from API
+        return techniquesFromApi
+    } catch (apiError) {
+        console.error("Failed to fetch techniques from API:", apiError);
+        try {
+            const techniquesFromLocalStorage = await fetchFromLocalStorage(); // Fallback to local storage
+            return techniquesFromLocalStorage
+        } catch (localStorageError) {
+            console.error("Failed to fetch techniques from local storage:", localStorageError);
+            throw new Error("No techniques available offline or online.");
+        }
+    }
+}
+
+function fetchFromLocalStorage() {
+    try {
+        const storedData = localStorage.getItem("techniques")
+        if (!storedData) {
+            throw new Error("No data found in local storage")
+        }
+        return JSON.parse(storedData)
+    } catch (error) {
+        console.error("Error fetching from local storage:", error);
+        throw error;  // Re-throw to handle it in the main logic
+    }
+}
+
+async function getTechniques() {
     try {
         const response = await axios.get("https://thought-techniques-api-git-main-bryantt23s-projects.vercel.app/techniques")
         const { data } = response

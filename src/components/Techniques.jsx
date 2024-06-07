@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import './Techniques.css'
-import { getTechniques } from '../services/techniquesApi'
+import { loadCurrentTechniques } from '../services/techniquesApi'
 import { weightedRandomSamplingUntilEmpty } from '../services/techniquesHelper'
 import Technique from './Technique'
 
@@ -17,7 +17,7 @@ function Techniques() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const techniquesFromApi = await getTechniques()
+        const techniquesFromApi = await loadCurrentTechniques()
         setTechniques(techniquesFromApi)
       } catch (error) {
         console.error(error)
