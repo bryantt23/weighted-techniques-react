@@ -1,4 +1,5 @@
 import React from 'react'
+import "./CategoryDropdown.css"
 
 function CategoryDropdown({ techniques, setCategory, category }) {
     const categories = ["All", ...Array.from(new Set(techniques.map(technique => technique.category)))]
@@ -8,10 +9,12 @@ function CategoryDropdown({ techniques, setCategory, category }) {
     }
 
     return (
-        <div>
-            <select value={category} onChange={handleChange} >
-                {categories.map(categoryCur => <option key={categoryCur} value={categoryCur}>{categoryCur}</option>)}
-            </select>
+        <div className="category-dropdown-container">
+            <div className="category-dropdown">
+                <select value={category} onChange={handleChange} >
+                    {categories.map(categoryCur => <option key={categoryCur} value={categoryCur}>{categoryCur}</option>)}
+                </select>
+            </div>
         </div>
     )
 }
