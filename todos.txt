@@ -1,15 +1,15 @@
 convert to React x
 make already clicked dull green x
-make it into a pwa
+make it into a pwa x
 
+filter
 show all
     disable show all and more techniques    
 when all techniques shown, disable more techniques 
-filter
 sort ascending descending
 hide description makes collapse go to the top of that technique component
 
 redux toolkit
 low priority update the like count
-add pages to see all techniqiues 
+add pages to see all techniques 
 

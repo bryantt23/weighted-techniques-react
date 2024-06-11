@@ -3,16 +3,19 @@ import './Techniques.css'
 import { loadCurrentTechniques } from '../services/techniquesApi'
 import { weightedRandomSamplingUntilEmpty } from '../services/techniquesHelper'
 import Technique from './Technique'
+import CategoryDropdown from './CategoryDropdown'
 
-const PAGE_SIZE = 16;
+const PAGE_SIZE = 7;
 
 function Techniques() {
   const [techniques, setTechniques] = useState([])
   const [techniquesWithWeightedRandomization, setTechniquesWithWeightedRandomization] = useState([])
+  const [techniquesWithWeightedRandomizationCategorized, setTechniquesWithWeightedRandomizationCategorized] = useState([])
   const [techniquesDisplayed, setTechniquesDisplayed] = useState([])
   const [curPos, setCurPos] = useState(0)
   const [firstItemElementId, setFirstItemElementId] = useState()
   const ref = useRef(null)
+  const [category, setCategory] = useState("All")
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,10 +37,22 @@ function Techniques() {
   }, [techniques])
 
   useEffect(() => {
-    if (techniquesWithWeightedRandomization.length > 0 && techniquesDisplayed.length === 0) {
-      getMoreTechniques()
+    setCurPos(0)
+    setTechniquesDisplayed([])
+    if (category === "All") {
+      setTechniquesWithWeightedRandomizationCategorized([...techniquesWithWeightedRandomization])
     }
-  }, [techniquesWithWeightedRandomization])
+    else {
+      const filteredTechniques = techniquesWithWeightedRandomization.filter(technique => technique.category === category)
+      setTechniquesWithWeightedRandomizationCategorized([...filteredTechniques])
+    }
+  }, [category, techniquesWithWeightedRandomization])
+
+  useEffect(() => {
+    if (techniquesWithWeightedRandomizationCategorized.length > 0 && techniquesDisplayed.length === 0) {
+      displayMoreTechniques()
+    }
+  }, [techniquesWithWeightedRandomizationCategorized])
 
   useEffect(() => {
     if (ref.current) {
@@ -45,11 +60,10 @@ function Techniques() {
     }
   }, [techniquesDisplayed])
 
-  const getMoreTechniques = () => {
-
-    const endPos = Math.min(curPos + PAGE_SIZE, techniquesWithWeightedRandomization.length);
+  const displayMoreTechniques = () => {
+    const endPos = Math.min(curPos + PAGE_SIZE, techniquesWithWeightedRandomizationCategorized.length);
     const currentTechniquesRemovedHighlighting = techniquesDisplayed.map(technique => ({ ...technique, isHighlighted: false }))
-    const nextTechniques = techniquesWithWeightedRandomization.slice(curPos, endPos).map(technique => ({ ...technique, isHighlighted: true }))
+    const nextTechniques = techniquesWithWeightedRandomizationCategorized.slice(curPos, endPos).map(technique => ({ ...technique, isHighlighted: true }))
     setFirstItemElementId(nextTechniques[0]._id)
     setTechniquesDisplayed([...currentTechniquesRemovedHighlighting, ...nextTechniques])
     setCurPos(endPos);
@@ -64,6 +78,8 @@ function Techniques() {
   return (
     <div className="container">
       <h1>Smash the automatic thought techniques</h1>
+
+      <CategoryDropdown techniques={techniques} setCategory={setCategory} category={category} />
       <ul className="techniques">
         {techniquesDisplayed.map(technique =>
           <Technique
@@ -72,7 +88,7 @@ function Techniques() {
             ref={firstItemElementId === technique._id ? ref : null}
           />)}
       </ul>
-      <button className="more" onClick={getMoreTechniques}>Get More Techniques</button>
+      <button className="more" onClick={displayMoreTechniques}>Get More Techniques</button>
       <button className="reset" onClick={reshuffleTechniques}>Start over</button>
     </div>
   )
