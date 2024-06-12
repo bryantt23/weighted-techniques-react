@@ -86,7 +86,7 @@ button.already-clicked {
   z-index: 99;
   border: none;
   outline: none;
-  background-color: red;
+  background-color: #3498db; /* Updated color */
   color: white;
   cursor: pointer;
   padding: 15px;
@@ -95,5 +95,5 @@ button.already-clicked {
 }
 
 .go-to-top:hover {
-  background-color: #555;
+  background-color: #2980b9;
 }

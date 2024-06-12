@@ -28,7 +28,10 @@ function Techniques() {
       }
     }
     fetchData()
-    window.onscroll = scrollFunction
+    window.addEventListener("scroll", scrollFunction)
+    return () => {
+      window.removeEventListener("scroll", scrollFunction)
+    }
   }, [])
 
   function scrollFunction() {
@@ -41,7 +44,10 @@ function Techniques() {
   }
 
   function topFunction() {
-    document.documentElement.scrollTop = 0
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
   }
 
   useEffect(() => {
