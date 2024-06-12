@@ -15,6 +15,7 @@ function Techniques() {
   const [curPos, setCurPos] = useState(0)
   const [firstItemElementId, setFirstItemElementId] = useState()
   const ref = useRef(null)
+  const scrollButtonRef = useRef(null)
   const [category, setCategory] = useState("All")
 
   useEffect(() => {
@@ -27,7 +28,21 @@ function Techniques() {
       }
     }
     fetchData()
+    window.onscroll = scrollFunction
   }, [])
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      scrollButtonRef.current.style.display = "block"
+    }
+    else {
+      scrollButtonRef.current.style.display = "none"
+    }
+  }
+
+  function topFunction() {
+    document.documentElement.scrollTop = 0
+  }
 
   useEffect(() => {
     if (techniques.length > 0) {
@@ -92,6 +107,7 @@ function Techniques() {
       </ul>
       <button className="more" onClick={displayMoreTechniques}>Get More Techniques</button>
       <button className="reset" onClick={reshuffleTechniques}>Start over</button>
+      <button className="go-to-top" onClick={topFunction} ref={scrollButtonRef}>Go to Top</button>
     </div>
   )
 }
