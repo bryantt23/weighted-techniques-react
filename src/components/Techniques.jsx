@@ -64,9 +64,11 @@ function Techniques() {
     const endPos = Math.min(curPos + PAGE_SIZE, techniquesWithWeightedRandomizationCategorized.length);
     const currentTechniquesRemovedHighlighting = techniquesDisplayed.map(technique => ({ ...technique, isHighlighted: false }))
     const nextTechniques = techniquesWithWeightedRandomizationCategorized.slice(curPos, endPos).map(technique => ({ ...technique, isHighlighted: true }))
-    setFirstItemElementId(nextTechniques[0]._id)
-    setTechniquesDisplayed([...currentTechniquesRemovedHighlighting, ...nextTechniques])
-    setCurPos(endPos);
+    if (nextTechniques.length > 0) {
+      setFirstItemElementId(nextTechniques[0]._id)
+      setTechniquesDisplayed([...currentTechniquesRemovedHighlighting, ...nextTechniques])
+      setCurPos(endPos);
+    }
   }
 
   const reshuffleTechniques = () => {
