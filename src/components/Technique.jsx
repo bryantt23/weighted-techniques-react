@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef, useRef, useEffect } from 'react'
 import { handleLike } from '../services/techniquesApi'
 
 const HIGHLIGHTED_CLASS_NAME = "current";
@@ -7,12 +7,27 @@ const Technique = forwardRef(({ technique }, ref) => {
   const [showDescription, setShowDescription] = useState(false)
   const [justLiked, setJustLiked] = useState(false)
   const [alreadyLiked, setAlreadyLiked] = useState(false)
-  const [buttonClassNames, setButtonClassNames] = useState("")
   const { name, weight, description, _id, isHighlighted } = technique
+  const localRef = useRef(null)
+
+
+  useEffect(function () {
+    if (ref) {
+      ref.current = localRef.current;
+    }
+    localRef.current = localRef.current
+  }, [localRef.current]);
 
   const toggleDescription = () => {
-    setShowDescription(prev => !prev)
+    setShowDescription(prev => {
+      if (prev) {
+        localRef.current.scrollIntoView({ behavior: "smooth" })
+      }
+      return !prev
+    })
   }
+
+
 
   const handleLikeClick = async (e) => {
     e.stopPropagation();
@@ -30,9 +45,9 @@ const Technique = forwardRef(({ technique }, ref) => {
   }
 
   return (<li
-    ref={ref}
+    ref={localRef}
     key={_id} className={isHighlighted ? HIGHLIGHTED_CLASS_NAME : ""}
-    onClick={toggleDescription}>
+    onClick={toggleDescription} >
     <div>
       {name} ({weight})
     </div>
