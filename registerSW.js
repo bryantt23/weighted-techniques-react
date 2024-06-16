@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/weighted-techniques-react/sw.js', { scope: '/weighted-techniques-react/' })})}
