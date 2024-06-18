@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 
 function TechniqueRaw({ technique, index }) {
     const [showDescription, setShowDescription] = useState(false)
-    const { name, weight, description, _id } = technique
+    const { name, weight, description } = technique
 
     return (
         <div>
-            {index + 1}. {name} ({weight}) <button onClick={() => setShowDescription(!showDescription)}>{showDescription ? "Hide" : "Show"} Description</button>
+            {index + 1}. {name} ({weight})
+            {description && <span>{" "}
+                <button onClick={() => setShowDescription(!showDescription)}>{showDescription ? "Hide" : "Show"} Description</button>
+            </span>}
             {showDescription && description}
         </div>
     )

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import './Techniques.css'
+import './TechniqueList.css'
 import { loadCurrentTechniques } from '../services/techniquesApi'
 import { weightedRandomSamplingUntilEmpty } from '../services/techniquesHelper'
 import Technique from './Technique'
@@ -7,7 +7,7 @@ import CategoryDropdown from './CategoryDropdown'
 
 const PAGE_SIZE = 7;
 
-function Techniques() {
+function TechniqueList() {
   const [techniques, setTechniques] = useState([])
   const [techniquesWithWeightedRandomization, setTechniquesWithWeightedRandomization] = useState([])
   const [techniquesWithWeightedRandomizationCategorized, setTechniquesWithWeightedRandomizationCategorized] = useState([])
@@ -118,4 +118,4 @@ function Techniques() {
   )
 }
 
-export default Techniques
+export default TechniqueList
