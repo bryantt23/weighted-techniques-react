@@ -58,7 +58,7 @@ const Technique = forwardRef(({ technique }, ref) => {
       onClick={handleLikeClick}>
       {justLiked ? "Like 👍" : "Like"}
     </button>
-    {description && <button className="toggle-btn toggle" >Show Description</button>}
+    {description && <button className="toggle-btn toggle" >{showDescription ? "Hide" : "Show"} Description</button>}
   </li>)
 })
 
