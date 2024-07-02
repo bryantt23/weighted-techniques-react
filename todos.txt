@@ -4,6 +4,8 @@ make it into a pwa x
 filter by category x
 add a scroll to top hovering button thing x
 
+when clicking the button a second time show x2, x3, etc.
+
 when collapse, go to the top of the technique/component x
 add page to see all techniques in rough format
     order by 
