@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import './TechniqueList.css'
 import { loadCurrentTechniques } from '../services/techniquesApi'
-import { alternateWeightedSampling } from '../services/techniquesHelper'
+import { getShuffledTechniques, RANDOMIZATION_STRATEGY } from '../services/techniquesHelper'
 import Technique from './Technique'
 import CategoryDropdown from './CategoryDropdown'
 
@@ -52,7 +52,7 @@ function TechniqueList() {
 
   useEffect(() => {
     if (techniques.length > 0) {
-      const shuffledTechniques = alternateWeightedSampling([...techniques]).map(technique => ({ ...technique, isHighlighted: false }))
+      const shuffledTechniques = getShuffledTechniques([...techniques], RANDOMIZATION_STRATEGY.nonWeightedRandomization).map(technique => ({ ...technique, isHighlighted: false }))
       setTechniquesWithWeightedRandomization(shuffledTechniques)
     }
   }, [techniques])
